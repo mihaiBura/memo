@@ -3,9 +3,9 @@
 // @namespace    https://github.com/mihaiBura/memo
 // @version      0.1
 // @description  No more forgetting important things.
-// @author       You
+// @author       mbura
 // @match        *://*/*
-// @grant        mbura
+// @grant        none
 // ==/UserScript==
 
 (function(window, document) {
