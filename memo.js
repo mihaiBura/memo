@@ -19,9 +19,9 @@
     * Based on hostname, pathname, and search.
     * Trying to avoid different ports, protocols, hashes
     * , and other href alterations
-    * 
-    * See more: 
-    * https://developer.mozilla.org/en-US/docs/Web/API/Location 
+    *
+    * See more:
+    * https://developer.mozilla.org/en-US/docs/Web/API/Location
     * http://bl.ocks.org/abernier/3070589
     */
     function getLocationHash(location) {
@@ -33,11 +33,22 @@
     }
 
     function setData(key, data) {
-        window.localStorage.setItem(key, data);
+        if(data.length === 0){
+            deleteData(key);
+        } else {
+            window.localStorage.setItem(key, data);
+        }
+    }
+
+    function deleteData(key){
+        window.localStorage.removeItem(key);
     }
 
     function renderData(data) {
         textbox.value = data;
+        if(data) {
+            showWrapper();
+        }
     }
 
     function createTextbox() {
@@ -46,6 +57,7 @@
 
         //TODO: extract into a css class and decouple wrapper from textbox
         wrapper.style.position = 'fixed';
+        wrapper.style.zIndex = '9000';
         wrapper.style.bottom = '0px';
         wrapper.style.right = '0px';
         wrapper.style.height = '100px';
@@ -66,10 +78,27 @@
         setData(k, text);
     }
 
+    /*
+    * Press ` to toggle the memo
+    */
     function listenForUIToggle(e){
-        if(e.shiftKey && e.keyCode === 126) {
-            textbox.style.display === 'none' ? textbox.style.display = 'block' : textbox.style.display = 'none';
+        if(e.keyCode === 96) {
+            e.preventDefault();
+            if(textbox.style.display === 'none'){
+                showWrapper();
+            } else{
+                hideWrapper();
+            }
         }
+    }
+
+    function showWrapper(){
+        textbox.style.display = 'block';
+        textbox.focus();
+    }
+
+    function hideWrapper(){
+       textbox.style.display = 'none';
     }
 
     /*
